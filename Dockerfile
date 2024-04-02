@@ -1,4 +1,4 @@
-FROM arm32v7/openjdk:8
+FROM adoptopenjdk:8-jre-hotspot-arm64
 
 VOLUME /tmp
 ADD target/code-u12.jar app.jar
