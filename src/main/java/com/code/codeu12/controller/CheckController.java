@@ -16,6 +16,7 @@ public class CheckController {
     @GetMapping(path = "/check/{id}")
     public String rss(@PathVariable("id") String id) {
 
+        System.out.println(id);
         return id;
     }
 }
