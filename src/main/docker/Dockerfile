@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 VOLUME /tmp
 ADD Code-U12-0.0.1-SNAPSHOT.jar Code-U12.jar
 RUN bash -c 'touch /app.jar'
