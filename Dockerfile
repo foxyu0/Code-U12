@@ -1,5 +1,6 @@
 FROM openjdk:8
 VOLUME /tmp
-ADD Code-U12-0.0.1-SNAPSHOT.jar Code-U12.jar
+ADD target/code-u12.jar app.jar
+EXPOSE 4561
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-Xms128m","-Xmx128m","-jar","/app.jar","--spring.profiles.active=dev","-c"]

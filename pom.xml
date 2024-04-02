@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.code</groupId>
-    <artifactId>Code-U12</artifactId>
+    <artifactId>code-u12</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Code-U12</name>
     <description>Code-U12</description>
@@ -108,6 +108,7 @@
     </dependencies>
 
     <build>
+        <finalName>code-u12</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -121,24 +122,42 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <!-- tag::plugin[] -->
+            <!-- 构建docker镜像 -->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
+                <version>1.2.2</version>
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <!-- image 的名字 -->
+                    <imageName>${project.build.finalName}</imageName>
+                    <!-- image 的tag, 可以是多个 -->
+                    <imageTags>
+                        <imageTag>latest</imageTag>
+                        <imageTag>${project.version}</imageTag>
+                    </imageTags>
+                    <!-- Dockerfile所在的目录 -->
                     <dockerDirectory>${project.basedir}</dockerDirectory>
+                    <!-- 复制jar到docker的位置 -->
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
+                            <!--jar 包所在的路径，对应target目录-->
                             <directory>${project.build.directory}</directory>
+                            <!-- 包含的jar　-->
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
                 </configuration>
             </plugin>
-            <!-- end::plugin[] -->
         </plugins>
 
         <resources>
